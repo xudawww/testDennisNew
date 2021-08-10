@@ -27,7 +27,6 @@ const Home = (props) => {
 
   useEffect(() => {
     fetchConversations();
-    console.log('updated')
   }, [fetchConversations]);
 
   if (!user.id) {

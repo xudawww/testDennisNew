@@ -26,8 +26,6 @@ const ActiveChat = (props) => {
   const { user } = props;
   const conversation = props.conversation || {messages:[]};
 useEffect(()=>{
-  console.log('111')
-
 },[props.conversation])
   return (
     <Box className={classes.root}>
