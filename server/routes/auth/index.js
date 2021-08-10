@@ -59,6 +59,7 @@ router.post("/login", async (req, res, next) => {
       console.log({ error: "Wrong username and/or password" });
       res.status(401).json({ error: "Wrong username and/or password" });
     } else {
+      console.log(process.env.SESSION_SECRET)
       const token = jwt.sign(
         { id: user.dataValues.id },
         process.env.SESSION_SECRET,
