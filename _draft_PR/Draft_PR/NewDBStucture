@@ -1,0 +1,14 @@
+//Just Delete the Converstaion and preserve the Message and User, 
+and delete convsersation id column in Message\
+Message:
++-----------+-----------+------+-----+-------------------
+| Field     | Type      | Null | Key | Default           
++-----------+-----------+------+-----+-------------------
+| id        | int(11)   | NO   | PRI | 0                 
+| senderId: | int(11)   | NO   | NULL|                   
+| updateAt  | timestamp | NO   | NULL| CURRENT_TIMESTAMP 
+| senderId: | int(11)   | NO   | NULL|                    
+| text      |varchar(225)| NO  | NULL|                       
++-----------+-----------+------+-----+-------------------
+
+

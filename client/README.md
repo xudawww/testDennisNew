@@ -1,68 +1,30 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+bug1:Fix the problem of mgs not showing directyly
 
-## Available Scripts
 
-In the project directory, you can run:
+Feature 2:Add the feature of unread msg, the screenshot is in  UnreadMsg_Scrren_shot
 
-### `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Feature 3 questions:
+1.
+ First of all, the struecture of the state needs to be changed, right now we are using 
+state like state:{ conversations:{messages:[]}}, if we need to change as room chat, it should be changes as just state:{messages:[]}, and under the key of msgs,we modify as example as following:
+{
+createdAt: "2021-08-11T13:52:30.715Z"
+id: 17
+senderId: 8
+text: "111"
+updatedAt: "2021-08-11T13:52:30.715Z"}
+Because we dont need conversation Id anymore, there is nothing meanningful to have conversation object,And for the websocket, we dont need to do any change, because your websocket is actually a broadcast, so it's good for group chat already.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+However, the way to add the msg into state needs to be changed:
+right now the corresponding function is like once getting the message, it checks if the conversation id of this message is in the list of the state of conversations. if it is, just add
+the message, but now it's a groupd chat, we have to skip this step and just add the messages into our states.
 
-### `npm test`
+2:
+I think we need to preserve the old way to do 1 to 1 chat at beggining, we shouldn't just change anything causing sth confusing to users, then we just add another state first, and write additional action and rootreducer, after developing all frontend and backend,have another url set up for developing and testing purposes for developers, however the customers can't access to this page, in the end, if all the things work, it could then start to merge,however, the private chat should still be preserved, and then send the customers the email, and set up the fixed header on website and notify them the 1 to 1 chat will be changed as group chat, then after 3 days(As announced in notification), we just change the private chat to group chat.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
