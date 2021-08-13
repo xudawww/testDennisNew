@@ -5,6 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  queryUnreadNumber
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -69,11 +70,13 @@ export const logout = (id) => async (dispatch) => {
 
 // CONVERSATIONS THUNK CREATORS
 
-export const fetchConversations = () => async (dispatch) => {
+export const fetchConversations = (uid) => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
-   
     dispatch(gotConversations(data));
+    console.log(data)
+    dispatch(queryUnreadNumber(uid))
+
   } catch (error) {
     console.error(error);
   }
@@ -98,13 +101,11 @@ const sendMessage = (data, body) => {
 export const postMessage = (body) => async(dispatch) => {
   try {
     const data = await saveMessage(body);
-
     if (!body.conversationId) {
       dispatch(addConversation(body.recipientId, data.message));
     } else {
-      dispatch(setNewMessage(data.message));
+      dispatch(setNewMessage(data.message,null,body.uid));
     }
-
     sendMessage(data, body);
   } catch (error) {
     console.error(error);

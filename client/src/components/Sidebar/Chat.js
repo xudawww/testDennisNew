@@ -3,6 +3,7 @@ import { Box } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
+import {updateUnreadNumberBadge} from "../../store/conversations";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +26,14 @@ const Chat = (props) => {
   const { otherUser } = conversation;
 
   const handleClick = async (conversation) => {
-    await props.setActiveChat(conversation.otherUser.username);
+    console.log('herePPPPP')
+      await Promise.all([
+        props.updateUnread(0,conversation.id,props.user.id)
+      ]);
+      
+      await props.setActiveChat(conversation.otherUser.username);
+
+
   };
 
   return (
@@ -45,8 +53,17 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setActiveChat: (id) => {
       dispatch(setActiveChat(id));
-    }
+    },
+      updateUnread:(number,id,uid)=>{
+        dispatch(updateUnreadNumberBadge(number,id,uid));  
+      }
+
+  };
+};
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
   };
 };
 
-export default connect(null, mapDispatchToProps)(Chat);
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Chat));

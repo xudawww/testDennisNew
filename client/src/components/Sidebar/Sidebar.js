@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -23,7 +23,10 @@ const Sidebar = (props) => {
   const classes = useStyles();
   const conversations = props.conversations || [];
   const { handleChange, searchTerm } = props;
+  useEffect(()=>{
+     console.log('1212')
 
+  },[conversations])
   return (
     <Box className={classes.root}>
       <CurrentUser />
@@ -32,6 +35,7 @@ const Sidebar = (props) => {
       {conversations
         .filter((conversation) => conversation.otherUser.username.includes(searchTerm))
         .map((conversation) => {
+
           return <Chat conversation={conversation} key={conversation.otherUser.username} />;
         })}
     </Box>
@@ -40,7 +44,8 @@ const Sidebar = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    conversations: state.conversations
+    conversations: state.conversations,
+    lastActiveUser:state.activeConversation
   };
 };
 

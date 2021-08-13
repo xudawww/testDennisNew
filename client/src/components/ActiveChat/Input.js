@@ -33,8 +33,10 @@ const Input = (props) => {
       text: event.target.text.value,
       recipientId: otherUser.id,
       conversationId,
-      sender: conversationId ? null : user
+      sender: conversationId ? null : user,
+      uid:user.id
     };
+  
     await postMessage(reqBody);
     setText("");
   };
@@ -62,5 +64,6 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
+
 
 export default connect(null, mapDispatchToProps)(Input);
