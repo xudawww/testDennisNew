@@ -5,7 +5,6 @@ export const addMessageToStore = (state, payload) => {
   let localStrageBadgeDatavalue = JSON.parse(localStrageBadgeData);
   // if sender isn't null, that means the message needs to be put in a brand new convo
   if (sender !== null) {
-    console.log('new msg',message)
      const newConvo = {
       id: message.conversationId,
       otherUser: sender,
@@ -27,7 +26,6 @@ export const addMessageToStore = (state, payload) => {
     newConvo.latestMessageText = message.text;
     return [newConvo, ...state];
   }
-  console.log(uid+'ssssssssss')
   if(uid!==message.senderId){
     localStrageBadgeDatavalue ={
       ...localStrageBadgeDatavalue,
@@ -41,7 +39,7 @@ export const addMessageToStore = (state, payload) => {
 
   }
   return state.map((convo) => {
-    console.log(convo.unreadAmount)
+
     if (convo.id === message.conversationId) {
        return {
         ...convo,
@@ -102,7 +100,6 @@ export const removeOfflineUserFromStore = (state, id) => {
 
 export const addSearchedUsersToStore = (state, users) => {
   const currentUsers = {};
-  console.log(state)
   // make table of current users so we can lookup faster
   state.forEach((convo) => {
     currentUsers[convo.otherUser.id] = true;
@@ -123,12 +120,10 @@ export const addSearchedUsersToStore = (state, users) => {
 
 export const queryAndAssignUnreadBadge = (state,id)=>{
   let localStrageBadgeData = localStorage.getItem(process.env.REACT_APP_LOCAL_STORAGE_KEY)||"{}";
-  console.log(localStrageBadgeData )
   let localStrageBadgeDatavalue = JSON.parse(localStrageBadgeData);
   let getUnreadVal = (localStrageBadgeDatavalue[`user${id}`]||{});
   return state.map((convo) => {
     let result =  getUnreadVal[`con${convo.id}`]
-    console.log(result)
     if(result===undefined){
       result = convo.messages.reduce(function(sum, convoEle) {
       return (convoEle.senderId !== id) ? sum+1 : sum;

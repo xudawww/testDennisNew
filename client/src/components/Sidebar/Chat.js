@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Box } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,12 +21,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Chat = (props) => {
+  useEffect(()=>{
+     if(conversation.unreadAmount>0&&conversation.otherUser.username===activeConversation)
+      { 
+        props.updateUnread(0,conversation.id,props.user.id)
+      }
+  })
   const classes = useStyles();
-  const { conversation } = props;
+  const { conversation, activeConversation } = props;
   const { otherUser } = conversation;
 
   const handleClick = async (conversation) => {
-    console.log('herePPPPP')
+
       await Promise.all([
         props.updateUnread(0,conversation.id,props.user.id)
       ]);
@@ -62,7 +68,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
+    activeConversation:state.activeConversation
   };
 };
 
