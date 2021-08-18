@@ -4,8 +4,6 @@ import {
   addSearchedUsersToStore,
   removeOfflineUserFromStore,
   addMessageToStore,
-  queryAndAssignUnreadBadge,
-  updateConvoUnreadNumber
 } from "./utils/reducerFunctions";
 
 // ACTIONS
@@ -17,30 +15,9 @@ const REMOVE_OFFLINE_USER = "REMOVE_OFFLINE_USER";
 const SET_SEARCHED_USERS = "SET_SEARCHED_USERS";
 const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 const ADD_CONVERSATION = "ADD_CONVERSATION";
-const UPDATE_UNREAD_NUMBER="UPDATE_UNREAD_NUMBER"
-const QUERY_UNREAD_NUMBER="QUERY_UNREAD_NUMBER"
+
 // ACTION CREATORS
 
-
-export const queryUnreadNumber=(id)=>{
-   return {
-     type:QUERY_UNREAD_NUMBER,
-     payload:id
-    
-   }
-    
-
-
-}
-
-export const updateUnreadNumberBadge=(number,id,uid)=>{
-   return{
-     type:UPDATE_UNREAD_NUMBER,
-     payload:{number:number,id:id,uid:uid}
-
-   }
-
-}
 export const gotConversations = (conversations) => {
   return {
     type: GET_CONVERSATIONS,
@@ -48,10 +25,10 @@ export const gotConversations = (conversations) => {
   };
 };
 
-export const setNewMessage = (message, sender,uid='') => {
+export const setNewMessage = (message, sender) => {
   return {
     type: SET_MESSAGE,
-    payload: { message, sender: sender || null ,uid:uid},
+    payload: { message, sender: sender || null },
   };
 };
 
@@ -96,16 +73,6 @@ const reducer = (state = [], action) => {
   switch (action.type) {
     case GET_CONVERSATIONS:
       return action.conversations;
-    case UPDATE_UNREAD_NUMBER:
-       {
-         return updateConvoUnreadNumber(state,action.payload)
-
-       }
-    case QUERY_UNREAD_NUMBER:
-       {
-         return queryAndAssignUnreadBadge(state,action.payload)
-
-       }
     case SET_MESSAGE:
       return addMessageToStore(state, action.payload);
     case ADD_ONLINE_USER: {

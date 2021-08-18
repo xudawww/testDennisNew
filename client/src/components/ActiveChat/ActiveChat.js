@@ -1,4 +1,4 @@
-import React ,{useEffect}from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
 import { Input, Header, Messages } from "./index";
@@ -21,12 +21,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ActiveChat = (props) => {
-
   const classes = useStyles();
   const { user } = props;
-  const conversation = props.conversation || {messages:[]};
-useEffect(()=>{
-},[props.conversation])
+  const conversation = props.conversation || {};
+
   return (
     <Box className={classes.root}>
       {conversation.otherUser && (
@@ -64,4 +62,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-  export default connect(mapStateToProps, null)(ActiveChat);
+export default connect(mapStateToProps, null)(ActiveChat);

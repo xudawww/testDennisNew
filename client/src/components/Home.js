@@ -26,9 +26,7 @@ const Home = (props) => {
   }, [user.id]);
 
   useEffect(() => {
-
-    if(user.id)fetchConversations(user.id);
- 
+    fetchConversations();
   }, [fetchConversations]);
 
   if (!user.id) {
@@ -69,8 +67,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(logout(id));
       dispatch(clearOnLogout());
     },
-    fetchConversations: (uid) => {
-      dispatch(fetchConversations(uid));
+    fetchConversations: () => {
+      dispatch(fetchConversations());
     }
   };
 };
